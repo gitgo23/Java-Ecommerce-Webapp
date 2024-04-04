@@ -72,9 +72,20 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 dir('project') {
-                    deploy adapters: [tomcat9(path: '', url: 'http://51.20.105.119:8080')], contextPath: null, war: 'target/*.war'
+                    deploy adapters: [tomcat9(credentialsId: 'tomcat-server', path: '', url: 'http://51.20.105.119:8080')], contextPath: null, war: 'target/*.war'
                 }
             }
+        }
+    }
+    post {
+     always {
+        emailext attachLog: true,
+            subject: "'${currentBuild.result}'",
+            body: "Project: ${env.JOB_NAME}<br/>" +
+                "Build Number: ${env.BUILD_NUMBER}<br/>" +
+                "URL: ${env.BUILD_URL}<br/>",
+            to: 'chriscloudaz@gmail.com',                                
+            attachmentsPattern: ''
         }
     }
 }
