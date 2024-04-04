@@ -46,5 +46,27 @@ pipeline {
                 }
             }
         }
+
+        stage('Upload to Nexus') {
+            steps {
+                nexusArtifactUploader (
+                    artifacts: [
+                        [
+                            artifactId: 'project',
+                            classifier: '',
+                            file: '/var/lib/jenkins/workspace/Ecommerce-webapp/project/target/project.war',
+                            type: 'war'
+                        ]
+                    ],
+                    credentialsId: '', 
+                    groupId: 'com.project',
+                    nexusUrl: '16.16.158.67:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'ecommerce', 
+                    version: '0.0.1-SNAPSHOT'
+                )
+            }
+        }
     }
 }
