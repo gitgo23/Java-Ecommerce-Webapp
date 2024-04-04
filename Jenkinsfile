@@ -68,5 +68,13 @@ pipeline {
                 )
             }
         }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                dir('project') {
+                    deploy adapters: [tomcat9(path: '', url: 'http://51.20.105.119:8080')], contextPath: null, war: 'target/*.war'
+                }
+            }
+        }
     }
 }
