@@ -4,7 +4,7 @@ pipeline {
     tools {
         maven "maven3"
     }
-
+    
     stages {
         stage('Git Clone') {
             steps {
@@ -14,9 +14,7 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                dir('project') {
-                    sh 'mvn clean test package'
-                }
+                sh 'mvn clean test package'
             }
         }
     }
