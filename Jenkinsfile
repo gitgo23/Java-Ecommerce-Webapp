@@ -37,5 +37,14 @@ pipeline {
                 }  
             }
         }
+
+        stage('Scan Dependencies with Owasp') {
+            steps {
+                dir('project') {
+                    dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'DC'
+                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                }
+            }
+        }
     }
 }
