@@ -18,19 +18,23 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                sh 'mvn clean test package'
+                dir('project') {
+                    sh 'mvn clean test package'
+                }
             }
         }
 
         stage('Scan with Sonarqube') {
             steps {
-                script {
-                    compiledClassesDir = sh(script: 'mvn help:evaluate -Dexpression=project.build.outputDirectory -q -DforceStdout', returnStdout: true).trim()
+                dir('project') {
+                    script {
+                    // compiledClassesDir = sh(script: 'mvn help:evaluate -Dexpression=project.build.outputDirectory -q -DforceStdout', returnStdout: true).trim()
                     
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
-                    sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success -Dsonar.java.binaries=${compiledClassesDir}" 
+                    sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success -Dsonar.java.binaries=." 
+                        }
                     }
-                }
+                }  
             }
         }
     }
