@@ -58,7 +58,7 @@ pipeline {
                             type: 'war'
                         ]
                     ],
-                    credentialsId: '', 
+                    credentialsId: 'nexus-auth',
                     groupId: 'com.project',
                     nexusUrl: '16.16.158.67:8081', 
                     nexusVersion: 'nexus3', 
