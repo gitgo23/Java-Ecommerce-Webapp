@@ -24,8 +24,10 @@ pipeline {
 
         stage('Scan with Sonarqube') {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonar-token') {
                     sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success"
+                    }
                 }
             }
         }
