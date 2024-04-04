@@ -25,11 +25,10 @@ pipeline {
         stage('Scan with Sonarqube') {
             steps {
                 script {
+                    compiledClassesDir = sh(script: 'mvn help:evaluate -Dexpression=project.build.outputDirectory -q -DforceStdout', returnStdout: true).trim()
+                    
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
-                    '''
-                    sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success" \
-                    -Dsonar.java.binaries=.
-                    '''
+                    sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success -Dsonar.java.binaries=${compiledClassesDir}" 
                     }
                 }
             }
