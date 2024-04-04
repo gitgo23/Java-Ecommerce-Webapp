@@ -11,5 +11,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Chriscloudaz/Java-Ecommerce-Webapp.git'
             }
         }
+
+        stage('Build and Test') {
+            steps {
+                sh 'mvn clean test package'
+            }
+        }
     }
 }
