@@ -5,6 +5,10 @@ pipeline {
         maven "maven3"
     }
     
+    environment {
+        ScannerHome = tool "sonar-scanner"
+    }
+
     stages {
         stage('Git Clone') {
             steps {
@@ -15,6 +19,14 @@ pipeline {
         stage('Build and Test') {
             steps {
                 sh 'mvn clean test package'
+            }
+        }
+
+        stage('Scan with Sonarqube') {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                    sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success"
+                }
             }
         }
     }
