@@ -78,7 +78,7 @@ font-size: 27px;
 
 <div class="row">
 <%
-          String cat= request.getParameter("index.jsp?category=");
+          String cat= request.getParameter("category");
  ProductDao dao= new ProductDao(FactoryProvider.getFactory());
    List <Product>list= dao.getAllProducts();
    CategoryDao cdao= new CategoryDao(FactoryProvider.getFactory());
