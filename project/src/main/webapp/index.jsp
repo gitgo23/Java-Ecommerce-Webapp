@@ -76,15 +76,16 @@ font-size: 27px;
 </nav>
 
 
-<div class="row">
 <%
-          String cat= request.getParameter("category");
- ProductDao dao= new ProductDao(FactoryProvider.getFactory());
-   List <Product>list= dao.getAllProducts();
-   CategoryDao cdao= new CategoryDao(FactoryProvider.getFactory());
-   List <Category> clist= cdao.getCategories();
-   %>
-  </div>
+String cat= request.getParameter("category");
+SessionFactory factory = FactoryProvider.getFactory();
+if (factory!= null) {
+    ProductDao dao= new ProductDao(factory);
+    List <Product>list= dao.getAllProducts();
+    CategoryDao cdao= new CategoryDao(factory);
+    List <Category> clist= cdao.getCategories();
+}
+%>
 </div>
 <br>
 <h2 style="text-align: center;font-family: Fantasy, Copperplate;">Our Products</h2> 
