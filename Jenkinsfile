@@ -10,6 +10,12 @@ pipeline {
             steps {
                git branch: 'main', url: 'https://github.com/gitgo23/Java-Ecommerce-Webapp.git' 
             }
+        }
+
+        stage('Build with Maven') {
+            steps {
+                sh "mvn clean package"
+            }
         } 
     }
 }
