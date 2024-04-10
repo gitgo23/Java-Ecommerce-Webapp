@@ -60,6 +60,29 @@ pipeline {
              }
         }
 
+        stage('Deploy Build Artifact') {
+            steps {
+                nexusArtifactUploader(
+                  artifacts: [
+                    [
+                        artifactId: 'project', 
+                        classifier: '', 
+                        file: 'target/project.war', 
+                        type: 'war'
+                    ]
+                  ],
+                  credentialsId: 'NEXUS_CRED',
+                  groupId: 'com.project',
+                  nexusUrl: '100.24.240.178:8081',
+                  nexusVersion: 'nexus3',
+                  protocol: 'http',
+                  repository: 'EarthApp-Snapshot',
+                  version: '0.0.1-SNAPSHOT'
+                )
+
+            }
+        }
+
         stage('Deploy to Tomcat') {
             steps {
                 dir('project') {
