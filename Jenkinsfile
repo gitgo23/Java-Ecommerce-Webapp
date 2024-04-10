@@ -41,6 +41,16 @@ pipeline {
                      }
                  }  
              }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'tc-key', 
+                path: '', 
+                url: 'http://3.92.205.201:8080/')], 
+                contextPath: null, 
+                war: 'target/*.war'
+            }
         } 
     }
 
