@@ -10,6 +10,10 @@ pipeline {
         maven "Maven-3.9.6"
     }
 
+    environment {
+                ScannerHome = tool 'Sonar-5'
+            }
+
     stages {
         stage('Git Clone') {
             steps {
@@ -23,6 +27,20 @@ pipeline {
                     sh "mvn clean package"
                 }
             }
+        }
+
+        stage('Scan with Sonarqube') {
+             steps {
+                 dir('project') {
+                     script {
+                     // compiledClassesDir = sh(script: 'mvn help:evaluate -Dexpression=project.build.outputDirectory -q -DforceStdout', returnStdout: true).trim()
+                    
+                     withSonarQubeEnv(credentialsId: 'SONAR-TK') {
+                     sh "${ScannerHome}/bin/sonar-scanner -Dsonar.projectKey=ecommerce-webapp -Dsonar.projectName=ecommerce-success -Dsonar.java.binaries=." 
+                         }
+                     }
+                 }  
+             }
         } 
     }
 
