@@ -62,8 +62,9 @@ pipeline {
         
         stage('Deploy Build Artifact') {
             steps {
-                nexusArtifactUploader(
-                  artifacts: [
+                dir('project') {
+                    nexusArtifactUploader(
+                    artifacts: [
                     [
                         artifactId: 'project', 
                         classifier: '', 
@@ -78,7 +79,8 @@ pipeline {
                   protocol: 'http',
                   repository: 'Ecommerce-Snapshot',
                   version: '0.0.1-SNAPSHOT'
-                )
+                  )
+                }
 
             }
         }
