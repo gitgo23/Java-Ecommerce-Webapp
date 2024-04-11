@@ -84,7 +84,7 @@ pipeline {
 
             }
         }
-
+        /*
         stage('Deploy to Tomcat') {
             steps {
                 dir('project') {
@@ -93,6 +93,17 @@ pipeline {
                     url: 'http://54.167.62.13:8080/')], 
                     contextPath: null, 
                     war: 'target/*.war'
+                }
+            }
+        }*/
+
+        stage('Deploy to Tomcat') {
+            steps {
+                dir('project') {
+                        withCredentials([sshUserPrivateKey(credentialsId: 'TOMCAT_SERVER_AGENT', keyFileVariable: 'SSH_KEY')]) {
+                        script {
+                        sh 'scp -o StrictHostKeyChecking=no -i $SSH_KEY target/project.war ubuntu@54.167.62.13:/opt/tomcat9/webapps'
+                    }
                 }
             }
         }
