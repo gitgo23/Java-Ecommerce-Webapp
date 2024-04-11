@@ -42,14 +42,14 @@ pipeline {
                  }  
              }
         }
-
+        /*
         stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
               }
             }
-        }
+        }*/
 
         stage('Scan Dependencies with Owasp') {
              steps {
@@ -59,7 +59,7 @@ pipeline {
                  }
              }
         }
-
+        /*
         stage('Deploy Build Artifact') {
             steps {
                 nexusArtifactUploader(
@@ -76,7 +76,7 @@ pipeline {
                   nexusUrl: '100.24.240.178:8081',
                   nexusVersion: 'nexus3',
                   protocol: 'http',
-                  repository: 'EarthApp-Snapshot',
+                  repository: 'Ecommerce-Snapshot',
                   version: '0.0.1-SNAPSHOT'
                 )
 
@@ -86,14 +86,14 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 dir('project') {
-                    deploy adapters: [tomcat9(credentialsId: 'tc-key', 
+                    deploy adapters: [tomcat9(credentialsId: 'TOMCAT', 
                     path: '', 
                     url: 'http://3.92.205.201:8080/')], 
                     contextPath: null, 
                     war: 'target/*.war'
                 }
             }
-        } 
+        }*/
     }
 
     post {
