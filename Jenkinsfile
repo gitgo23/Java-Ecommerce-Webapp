@@ -42,14 +42,14 @@ pipeline {
                  }  
              }
         }
-        /*
+        
         stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
               }
             }
-        }*/
+        }
 
         stage('Scan Dependencies with Owasp') {
              steps {
@@ -59,7 +59,7 @@ pipeline {
                  }
              }
         }
-        /*
+        
         stage('Deploy Build Artifact') {
             steps {
                 nexusArtifactUploader(
@@ -73,7 +73,7 @@ pipeline {
                   ],
                   credentialsId: 'NEXUS_CRED',
                   groupId: 'com.project',
-                  nexusUrl: '100.24.240.178:8081',
+                  nexusUrl: '100.24.235.144:8081',
                   nexusVersion: 'nexus3',
                   protocol: 'http',
                   repository: 'Ecommerce-Snapshot',
@@ -88,12 +88,12 @@ pipeline {
                 dir('project') {
                     deploy adapters: [tomcat9(credentialsId: 'TOMCAT', 
                     path: '', 
-                    url: 'http://3.92.205.201:8080/')], 
+                    url: 'http://54.167.62.13:8080/')], 
                     contextPath: null, 
                     war: 'target/*.war'
                 }
             }
-        }*/
+        }
     }
 
     post {
